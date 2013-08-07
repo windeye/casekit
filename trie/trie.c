@@ -36,7 +36,7 @@ int find(const char chars[], int len) {
     int i = 0;
     while(i < len) {
        if(ptr->child[charToindex(chars[i])] == NULL) {
-         break;
+           break;
         }
         ptr = ptr->child[charToindex(chars[i])];
         i++;
@@ -53,5 +53,5 @@ void insert(const char chars[], int len) {
         }
         ptr = ptr->child[charToindex(chars[i])];
   }
-    ptr->type = COMPLETED;
+  ptr->type = COMPLETED;
 }
