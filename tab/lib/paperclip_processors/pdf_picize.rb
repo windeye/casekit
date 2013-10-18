@@ -19,8 +19,7 @@ module Paperclip
       #src = @file
       #dst = Tempfile.new([@basename, @format ? ".#{@format}" : ''])
       src_path = File.expand_path(@file.path) if @file
-      reader = reader = PDF::Reader.new(src_path)
-      digest = Digest::SHA1.hexdigest(@basename + Time.now.to_s)
+      digest = Digest::SHA1.hexdigest(@file.original_filename)
       dest_dir  = "/www/data/slides/" + digest
       dest = dest_dir + "/%d.png"
       begin
@@ -34,10 +33,8 @@ module Paperclip
         #success = Paperclip.run("mkdir", "-p #{dest_dir}")
         FileUtils.mkdir_p(dest_dir)
         success = Paperclip.run("mudraw", parameters, :source => src_path,:dest => dest)
-        fname = @basename + digest 
-        @file.instance_write(:file_name, fname)
       rescue Cocaine::CommandLineError => e
-        raise PaperclipError, "There was an error converting #{@basename} to swf"
+        raise PaperclipError, "There was an error converting #{@basename} to images"
       end
       dst = Tempfile.new([digest, ".jpg"],:encoding => 'ascii-8bit')
       dst_path = File.expand_path(dst.path)
@@ -53,7 +50,7 @@ module Paperclip
         params = params.flatten.compact.join(" ").strip.squeeze(" ")
 
         success = convert(params, :source => src_thumb,:dest => (dst_path))
-        FileUtils.cp(dst_path, dst_thumb)
+        #FileUtils.cp(dst_path, dst_thumb)
       rescue Cocaine::CommandLineError => e
         raise PaperclipError, "There was an error processing the thumbnail for #{@basename}"
       end
