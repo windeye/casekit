@@ -31,9 +31,9 @@ bool cmp(KV kv1,KV kv2)
 int main()
 {
   struct timeval start,end;
-  gettimeofday(&start,NULL);
   map<string,uint32_t> maplala;
-  for(int i =1; i; i--){
+  for(int i =100; i; i--){
+    gettimeofday(&start,NULL);
     maplala.insert(map<string,uint32_t>::value_type("xfabcd",1));
     maplala.insert(map<string,uint32_t>::value_type("vdfbcdef",2));
     maplala.insert(map<string,uint32_t>::value_type("cdefg",3));
@@ -59,15 +59,15 @@ int main()
       //printf("%s %u\n",it->first.c_str(),it->second);
     }
     maplala.clear();
+    gettimeofday(&end,NULL);
+    printf("map sec:%u,usec:%u.\n",end.tv_sec - start.tv_sec, end.tv_usec - start.tv_usec);
   }
 
-  gettimeofday(&end,NULL);
-  printf("sec:%u,usec:%u.\n",end.tv_sec - start.tv_sec, end.tv_usec - start.tv_usec);
 
-  gettimeofday(&start,NULL);
   vector<KV> vkv;
-  //vkv.reserve(20);
-  for(int j=1; j; j--){
+  vkv.reserve(20);
+  for(int j=100; j; j--){
+    gettimeofday(&start,NULL);
     vkv.push_back(KV(string("zxfdsfc"),5));
     vkv.push_back(KV(string("ysddfa"),5));
     vkv.push_back(KV(string("xfabcd"),1));
@@ -95,9 +95,9 @@ int main()
       //printf("key:%s,value:%u.\n",it->key.c_str(),it->value);
     }
     vkv.clear();
+    gettimeofday(&end,NULL);
+    printf("vector sec:%u,usec:%u.\n",end.tv_sec - start.tv_sec, end.tv_usec - start.tv_usec);
   }
-  gettimeofday(&end,NULL);
-  printf("sec:%u,usec:%u.\n",end.tv_sec - start.tv_sec, end.tv_usec - start.tv_usec);
   return 0;
 }
 

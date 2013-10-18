@@ -1,16 +1,3 @@
-/***************************************************************************
- * 
- * Copyright (c) 2013 izptec.com, Inc. All Rights Reserved
- * 
- **************************************************************************/
- 
- 
-/**
- * @file dynamic.cpp
- * @author Leokmax(xuliwei@izptec.com)
- * @date 2013/07/23 16:15:17
- * @brief 
- **/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
@@ -50,22 +37,3 @@ int main() {
   return 0;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* vim: set ts=4 sw=4 sts=4 tw=100 noet: */

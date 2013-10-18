@@ -1,14 +1,29 @@
 require 'uri'
 require 'net/http'
+require 'digest/md5'
 
-#uri = URI("http://10.0.2.136/dispatch")
-#req = Net::HTTP::Post.new(uri)
-#req.set_form_data('start' => '2013-07-01', 'end' => '2013-07-31')
+def post_to_ade(query)
+  Net::HTTP.start('10.0.2.136', 80) {|http|
+    res = http.post('/dispatch',query)
+    puts "POST result:"
+    puts res.body
+  }
+end
 
-#res = Net::HTTP.start(uri.host,uri.port) do |http|
-#    http.request(req)
-#end
-#
-Net::HTTP.start('10.0.2.136', 80) {|http|
-  response = http.post('/dispatch','querytype=subject&target=ruby')
-}
+
+def get_from_ade(query)
+  uri = URI('http://10.0.2.136/dispatch?'+query)
+  res = Net::HTTP.get_response(uri)
+  puts "GET result:"
+  puts res.body
+end
+
+
+
+t = 1000 * Time.now.to_i
+ts = t.to_s
+sign = Digest::MD5.hexdigest("appid=12plat=mogotimestamp=" + ts + "0123456789ABCDEF")
+query = "plat=mogo&appid=12&timestamp=" + ts + "&sign=" + sign
+
+get_from_ade(query)
+post_to_ade(query)
